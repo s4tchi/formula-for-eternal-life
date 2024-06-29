@@ -1,7 +1,7 @@
 <script setup>
     import { arrayFromLine, functionResult, coodToPostion } from '../utils';
 
-    const { xStart, xEnd, funcs, e } = defineProps({
+    const { xStart, xEnd, yStart, yEnd, funcs, e } = defineProps({
         xStart: Number,
         xEnd: Number,
         yStart: Number,
@@ -11,55 +11,58 @@
     })
 
     const xAxis = arrayFromLine(xStart, xEnd);
-    const coords = functionResult([-1, 0, 2, 1], xStart, xEnd, e)
-    const positions = coords.map((c) => coodToPostion(c.x, c.y, xStart, xEnd, xStart, xEnd))
+    const yAxis = arrayFromLine(yStart, yEnd);
+    const coords = functionResult([0, 1, 1, 0.1], xStart, xEnd, e)
+    const positions = coords.map((c) => coodToPostion(c.x, c.y, xStart, xEnd, yStart, yEnd))
 </script>
 
 <template>
-    <h1>DEBUG VERSION</h1>
-    <div class='graph-wrapper'>
-        <div class='center-item'>
-            <div class="graph-axis-x">
+    <div>
+        <h1>HTML VERSION</h1>
+        <div class='graph-wrapper'>
+            <div class='center-item'>
+                <div class="graph-axis-x">
 
-                <div class='graph-axis-line'/>
+                    <div class='graph-axis-line'/>
+                </div>
             </div>
-        </div>
 
-        <div class='center-item'>
-            <div class="graph-axis-y">
-                <div class='graph-axis-line'/>
+            <div class='center-item'>
+                <div class="graph-axis-y">
+                    <div class='graph-axis-line'/>
+                </div>
             </div>
-        </div>
 
-        <div class='center-item'>
-            <div class="graph-axis-coord-x">
-                <p v-for="value of xAxis" class='graph-axis-coord-1'>{{ value }}</p>
+            <div class='center-item'>
+                <div class="graph-axis-coord-x">
+                    <p v-for="value of xAxis" class='graph-axis-coord-1'>{{ value }}</p>
+                </div>
             </div>
-        </div>
 
-        <div class='center-item'>
-            <div class="graph-axis-coord-y">
-                <p v-for="value of xAxis" class='graph-axis-coord-1'>{{ value }}</p>
+            <div class='center-item'>
+                <div class="graph-axis-coord-y">
+                    <p v-for="value of yAxis" class='graph-axis-coord-1'>{{ value }}</p>
+                </div>
             </div>
-        </div>
 
-        <div class='center-item'>
-            <div class="graph-axis-lines-y">
-                <div v-for="value of xAxis" class='graph-line-y' />
+            <div class='center-item'>
+                <div class="graph-axis-lines-y">
+                    <div v-for="value of yAxis" class='graph-line-y' />
+                </div>
             </div>
-        </div>
 
-        <div class='center-item'>
-            <div class="graph-axis-lines-x">
-                <div v-for="value of xAxis" class='graph-line-x' />
+            <div class='center-item'>
+                <div class="graph-axis-lines-x">
+                    <div v-for="value of xAxis" class='graph-line-x' />
+                </div>
             </div>
-        </div>
 
-        <div class='center-item'>
-            <div class="graph-center"/>
-        </div>
+            <div class='center-item'>
+                <div class="graph-center"/>
+            </div>
 
-        <div v-for="p of positions" :style="{ 'top': p.y, 'left': p.x }" class="graph-point"/>
+            <div v-for="p of positions" :style="{ 'top': p.y, 'left': p.x }" class="graph-point"/>
+        </div>
     </div>
 </template>
 
@@ -82,12 +85,12 @@
     }
 
     .graph-line-y {
-        border-top: 1px dashed white;
+        border-top: 1px dashed #444;
         width: 100%;
     }
 
     .graph-line-x {
-        border-left: 1px dashed white;
+        border-left: 1px dashed #444;
         height: 100%;
     }
 
