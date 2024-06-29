@@ -8,7 +8,7 @@
         :xEnd="5"  
         :yStart="-5" 
         :yEnd="5"
-        :e="1"
+        :e="0.25"
     />
 </template>
 

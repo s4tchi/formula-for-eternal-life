@@ -1,7 +1,7 @@
 <script setup>
-    import { arrayFromLine } from '../utils';
+    import { arrayFromLine, functionResult, coodToPostion } from '../utils';
 
-    const { xStart, xEnd, funcs } = defineProps({
+    const { xStart, xEnd, funcs, e } = defineProps({
         xStart: Number,
         xEnd: Number,
         yStart: Number,
@@ -11,7 +11,8 @@
     })
 
     const xAxis = arrayFromLine(xStart, xEnd);
-
+    const coords = functionResult([-1, 0, 2, 1], xStart, xEnd, e)
+    const positions = coords.map((c) => coodToPostion(c.x, c.y, xStart, xEnd, xStart, xEnd))
 </script>
 
 <template>
@@ -57,6 +58,8 @@
         <div class='center-item'>
             <div class="graph-center"/>
         </div>
+
+        <div v-for="p of positions" :style="{ 'top': p.y, 'left': p.x }" class="graph-point"/>
     </div>
 </template>
 
@@ -68,7 +71,14 @@
         height: 500px;
         position: relative;
         box-sizing: border-box;
+        overflow: hidden;
+    }
 
+    .graph-point {
+        background: red;
+        height: 5px;
+        width: 5px;
+        position: absolute;
     }
 
     .graph-line-y {
